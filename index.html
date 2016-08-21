@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="test_uiApp">
+  <head>
+    <title>test_UI</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="angular/angular.min.js"></script>
+    <script src="angular/ngStorage.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body ng-controller="overview">
+    <main>
+      <nav>
+        <ul>
+          <h1>Main</h1>
+          <h2 class="nav" ng-mouseover="hoverEdit = true" ng-class="{navchange: hover}" ng-mouseleave="hover = true">Overview</h2>
+        </ul>
+      </nav>
+      <section ng-show="hoverEdit">
+        <div class="items">
+          <h3 class="item">Items</h3>
+          <form ng-submit="addItem()">
+            <input class="itemInput" type="text" ng-model="itemName" required placeholder="Type name here...">
+            <input class="inputbtn" type="submit" value="Add new">
+          </form>
+          <ul>
+            <li ng-repeat="item in overview track by $index">
+                <p class="itemName" ng-click="showme=true">{{ item.name }}<span class="numberComm">{{ countcom(item) }}</span></p>
+                <input class="inputdel" type="button" value="Delete" required ng-click="deleteItem(item)">
+                <hr class="line">
+                <div class="comments" ng-show="showme">
+                  <h3 class="item">Comments # {{ count() }}</h3>
+                  <ul>
+                    <li ng-repeat="comment in item.comments track by $index" >
+                      <img src="{{item.img}}" class="img" alt="avatar" width="30px" height="30px"><p class="com">{{ comment }}</p>
+                      <hr class="line">
+                    </li>
+                  </ul>
+                  <form class="formcom"ng-submit="addComment(comments,item)">
+                    <img src="{{item.img}}" alt="avatar" width="50px" height="50px"> <input class="inputcom" type="text" ng-model="comments.comment" required>
+                  </form>
+                </div>
+            </li>
+          </ul>  
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
